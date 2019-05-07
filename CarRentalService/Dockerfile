@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+WORKDIR /src
+COPY ["CarRentalService/CarRentalService.csproj", "CarRentalService/"]
+RUN dotnet restore "CarRentalService/CarRentalService.csproj"
+COPY . .
+WORKDIR "/src/CarRentalService"
+RUN dotnet build "CarRentalService.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "CarRentalService.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "CarRentalService.dll"]

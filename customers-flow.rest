@@ -1,0 +1,22 @@
+### Create customer 1
+POST http://localhost:5002/api/customers
+Content-Type: application/json
+
+{
+    "Name": "William Manson"
+}
+
+### Create customer 2
+POST http://localhost:5002/api/customers
+Content-Type: application/json
+
+{
+    "Name": "Jacob Snow"
+}
+
+### Get customers
+GET  http://localhost:5002/api/customers
+
+
+### Delete customer
+DELETE  http://localhost:5002/api/customers/1

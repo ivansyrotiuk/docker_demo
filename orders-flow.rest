@@ -1,0 +1,25 @@
+### Create order 1
+POST http://localhost:5000/api/orders
+Content-Type: application/json
+
+{
+    "CustomerId": 1,
+    "CarId": 1
+}
+
+### Create customer 2
+POST http://localhost:5000/api/orders
+Content-Type: application/json
+
+{
+    "CustomerId": 2,
+    "CarId": 2
+}
+
+### Get customers
+GET  http://localhost:5000/api/orders
+Content-Type: application/json
+
+
+### Delete customer
+DELETE  http://localhost:5000/api/orders/1

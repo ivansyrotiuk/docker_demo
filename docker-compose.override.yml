@@ -1,0 +1,48 @@
+version: '3.4'
+
+services:
+  carrentalservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - CUSTOMCONNSTR_OrdersDb=mongodb://nosql.data
+      - Services__Cars=http://carsservice
+      - Services__Customers=http://customersservice
+    ports:
+      - "5000:80"
+    depends_on:
+      - nosql.data
+      - carsservice
+      - customersservice
+
+
+  carsservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - CUSTOMCONNSTR_DefaultConnection=Server=sql.data;Database=cars;User Id=sa;Password=Passw0rd!
+    ports:
+      - "5001:80"
+    depends_on:
+      - sql.data
+
+
+  customersservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - CUSTOMCONNSTR_DefaultConnection=Server=sql.data;Database=customers;User Id=sa;Password=Passw0rd!
+    ports:
+      - "5002:80"
+    depends_on:
+      - sql.data
+
+
+  nosql.data:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
+    environment:
+      SA_PASSWORD: "Passw0rd!"
+      ACCEPT_EULA: "Y"

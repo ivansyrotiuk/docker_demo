@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  carrentalservice:
+    image: ${DOCKER_REGISTRY-}carrentalservice
+    build:
+      context: .
+      dockerfile: CarRentalService/Dockerfile
+
+  carsservice:
+    image: ${DOCKER_REGISTRY-}carsservice
+    build:
+      context: .
+      dockerfile: CarsService/Dockerfile
+
+  customersservice:
+    image: ${DOCKER_REGISTRY-}customersservice
+    build:
+      context: .
+      dockerfile: CustomersService/Dockerfile
+
+  nosql.data:
+    image: mongo:latest
+
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
